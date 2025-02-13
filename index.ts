@@ -1,7 +1,10 @@
 import express, { Request, Response } from 'express';
+import bodyParser from 'body-parser';
 
 const app = express();
 const port = 3000;
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const database = new Map<string, number>();
 function seedDatabase() {
@@ -47,6 +50,24 @@ app.get('/users', (req: Request, res: Response) => {
   return res.status(200).json({
     results: filteredUsers,
   });
+});
+
+app.post('/upload', (req: Request, res: Response) => {
+  const data = req.body.file;
+  if (!data) {
+    return res
+      .status(400)
+      .json({ error: 'No data found, please provide a valid csv file' });
+  }
+
+  const dataEntries = data.trim().split(/\r?\n/);
+
+  // First line is the header and will be ignored
+  dataEntries.shift();
+
+  console.log(dataEntries);
+
+  return res.status(200).json({ success: 1 });
 });
 
 app.listen(port, () => {
