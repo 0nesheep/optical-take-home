@@ -37,6 +37,14 @@ app.get('/users', (req: Request, res: Response) => {
       .json({ error: `Invalid sort parameter ${sortTarget}` });
   }
 
+  if (offsetVal > 0) {
+    filteredUsers = filteredUsers.slice(offsetVal);
+  }
+
+  if (limitVal !== undefined && limitVal >= 0) {
+    filteredUsers = filteredUsers.slice(0, limitVal);
+  }
+
   return res.status(200).json({
     results: filteredUsers,
   });
