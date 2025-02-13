@@ -22,4 +22,26 @@ app.get('/users', (req: Request, res: Response) => {
   const offsetVal = parseInt(offset as string) || 0;
   const limitVal = limit !== undefined ? parseInt(limit as string) : undefined;
   const sortTarget = (sort as string)?.toUpperCase() || '';
+
+  let filteredUsers = mockUsers.filter(
+    (user) => user.salary >= minSalary && user.salary <= maxSalary,
+  );
+
+  if (sortTarget === 'NAME') {
+    filteredUsers.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (sortTarget === 'SALARY') {
+    filteredUsers.sort((a, b) => a.salary - b.salary);
+  } else if (sortTarget !== '') {
+    return res
+      .status(400)
+      .json({ error: `Invalid sort parameter ${sortTarget}` });
+  }
+
+  return res.status(200).json({
+    results: filteredUsers,
+  });
+});
+
+app.listen(port, () => {
+  console.log(`Server is now on http://localhost:${port}`);
 });
