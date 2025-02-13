@@ -6,12 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
 const port = 3000;
-const mockUsers = [
-    { name: 'Alex', salary: 3000.0 },
-    { name: 'Bryan', salary: 3500.0 },
-    { name: 'Chris', salary: 2000.0 },
-    { name: 'Dave', salary: -100.0 },
-];
+const database = new Map();
+function seedDatabase() {
+    database.set('Alex', 3000.0);
+    database.set('Bryan', 3500.0);
+    database.set('Chris', 2000.0);
+    database.set('Dave', -100.0);
+}
 app.get('/users', (req, res) => {
     const { min = '0.0', max = '4000.0', offset = '0', limit, sort } = req.query;
     const minSalary = parseFloat(min) || 0.0;
@@ -19,7 +20,9 @@ app.get('/users', (req, res) => {
     const offsetVal = parseInt(offset) || 0;
     const limitVal = limit !== undefined ? parseInt(limit) : undefined;
     const sortTarget = (sort === null || sort === void 0 ? void 0 : sort.toUpperCase()) || '';
-    let filteredUsers = mockUsers.filter((user) => user.salary >= minSalary && user.salary <= maxSalary);
+    // Parse database
+    let userList = Array.from(database, ([name, salary]) => ({ name, salary }));
+    let filteredUsers = userList.filter((user) => user.salary >= minSalary && user.salary <= maxSalary);
     if (sortTarget === 'NAME') {
         filteredUsers.sort((a, b) => a.name.localeCompare(b.name));
     }
@@ -42,5 +45,6 @@ app.get('/users', (req, res) => {
     });
 });
 app.listen(port, () => {
+    seedDatabase();
     console.log(`Server is now on http://localhost:${port}`);
 });

@@ -3,17 +3,13 @@ import express, { Request, Response } from 'express';
 const app = express();
 const port = 3000;
 
-interface User {
-  name: string;
-  salary: number;
+const database = new Map<string, number>();
+function seedDatabase() {
+  database.set('Alex', 3000.0);
+  database.set('Bryan', 3500.0);
+  database.set('Chris', 2000.0);
+  database.set('Dave', -100.0);
 }
-
-const mockUsers: User[] = [
-  { name: 'Alex', salary: 3000.0 },
-  { name: 'Bryan', salary: 3500.0 },
-  { name: 'Chris', salary: 2000.0 },
-  { name: 'Dave', salary: -100.0 },
-];
 
 app.get('/users', (req: Request, res: Response) => {
   const { min = '0.0', max = '4000.0', offset = '0', limit, sort } = req.query;
@@ -23,7 +19,10 @@ app.get('/users', (req: Request, res: Response) => {
   const limitVal = limit !== undefined ? parseInt(limit as string) : undefined;
   const sortTarget = (sort as string)?.toUpperCase() || '';
 
-  let filteredUsers = mockUsers.filter(
+  // Parse database
+  let userList = Array.from(database, ([name, salary]) => ({ name, salary }));
+
+  let filteredUsers = userList.filter(
     (user) => user.salary >= minSalary && user.salary <= maxSalary,
   );
 
@@ -51,5 +50,6 @@ app.get('/users', (req: Request, res: Response) => {
 });
 
 app.listen(port, () => {
+  seedDatabase();
   console.log(`Server is now on http://localhost:${port}`);
 });
