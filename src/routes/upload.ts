@@ -3,7 +3,7 @@ import { database } from '../db';
 
 export const uploadRouter = Router();
 
-uploadRouter.post('/upload', (req: Request, res: Response) => {
+uploadRouter.post('/', (req: Request, res: Response) => {
   const data = req.body.file;
   if (!data) {
     return res

@@ -2,11 +2,11 @@
   "name": "govtechtakehome",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node index.js",
-    "dev": "tsc && node index.js",
+    "start": "node ./dist/index.js",
+    "dev": "tsc && node ./dist/index.js",
     "users": "curl -X GET",
     "upload": "curl -X POST -H \"Content-Type: application/x-www-form-urlencoded\" --data-urlencode \"file@%npm_config_filePath%\" http://localhost:3000/upload"
   },

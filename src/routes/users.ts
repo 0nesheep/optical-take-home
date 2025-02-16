@@ -3,7 +3,7 @@ import { database } from '../db';
 
 export const usersRouter = Router();
 
-usersRouter.get('/users', (req: Request, res: Response) => {
+usersRouter.get('/', (req: Request, res: Response) => {
   const { min = '0.0', max = '4000.0', offset = '0', limit, sort } = req.query;
   const minSalary = parseFloat(min as string) || 0.0;
   const maxSalary = parseFloat(max as string) || 4000.0;
