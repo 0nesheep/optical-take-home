@@ -7,8 +7,8 @@
     "build": "tsc",
     "start": "node index.js",
     "dev": "tsc && node index.js",
-    "users": "curl.exe -X GET",
-    "upload": "curl.exe -X POST -H \"Content-Type: application/x-www-form-urlencoded\" --data-urlencode \"file@%npm_config_filePath%\" http://localhost:3000/upload"
+    "users": "curl -X GET",
+    "upload": "curl -X POST -H \"Content-Type: application/x-www-form-urlencoded\" --data-urlencode \"file@%npm_config_filePath%\" http://localhost:3000/upload"
   },
   "keywords": [],
   "author": "",
