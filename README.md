@@ -1,4 +1,4 @@
-# SWE Take Home Assignment
+# Optical Take Home Assignment
 
 ## Setting up
 
@@ -44,7 +44,7 @@ Feel free to combine the different parameters!
 
 ## Testing Upload
 
-There are 3 data.csv files provided in the `src/sample-data` folder:
+There are 3 data files provided in the `src/sample-data` folder:
 
 1. `data.csv`: a csv file containing correct inputs for all rows and columns,
    including negative and 0 values.
@@ -77,4 +77,6 @@ again to check the new data!
 
 - Only one sort parameter can be provided at once.
 - If minimum and maximum inputs are incompatible (e.g. max < min), no error will
-  be shown. Instead, a empty json object will be returned.
+  be shown. Instead, an empty json object will be returned.
+- If parameters provided are invalid (e.g. numerical inputs like min and max are
+  not numerical), an error will be shown.
